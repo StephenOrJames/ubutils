@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar Generator (alpha) | UB Utils</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='calendar_generator.css') }}">
+</head>
+<body>
+  <header>
+    <h1>UB Utils: Calendar Generator <sup>alpha</sup></h1>
+  </header>
+  <main>
+    {% raw -%}
+      <section id="course-search">
+        <h2>Search for Courses</h2>
+        <form onsubmit="return false;">
+          <label>
+            Semester:
+            <select v-model="semester">
+              <option value="fall">Fall</option>
+              <option value="winter">Winter</option>
+              <option value="spring">Spring</option>
+              <option value="summer">Summer</option>
+            </select>
+          </label>
+
+          <label>
+            Course:
+            <input type="search" v-model="search.query" required>
+          </label>
+
+          <button v-on:click="doSearch">Search</button>
+        </form>
+
+        <p v-if="search.results.length === 0">No results.</p>
+        <template v-else>
+          <ul>
+            <li v-for="result in search.results" v-if="!result.isSelected">
+              <button v-on:click="select(result)">+</button>
+              {{ result.summary }}
+            </li>
+          </ul>
+        </template>
+      </section>
+
+      <section id="selected-courses">
+        <template v-if="courses.length > 0">
+          <h2>Selected courses</h2>
+          <ul>
+            <li v-for="course in courses">
+              <button v-on:click="unselect(course)">-</button>
+              {{ course.summary }}
+            </li>
+          </ul>
+
+          <div style="text-align: right;">
+            <button v-on:click="generateCalendar">Generate Calendar</button>
+          </div>
+        </template>
+      </section>
+    {%- endraw %}
+  </main>
+{#  <footer></footer>#}
+  <script src="https://unpkg.com/vue"></script>
+  <script src="{{ url_for('static', filename='calendar_generator.js') }}"></script>
+</body>
+</html>
