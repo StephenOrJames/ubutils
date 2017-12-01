@@ -25,10 +25,11 @@ main {
   padding: 1rem;
 }
 
-#course-search form {
+form {
   font-weight: bold;
 
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
 }
 
@@ -49,7 +50,7 @@ form {
   background-color: #e4e4e4;
   border-radius: .2rem;
   margin-top: .25rem;
-  padding: .5rem 0;
+  padding: .5rem;
 }
 
 form button,
@@ -57,4 +58,22 @@ form input,
 form select {
   border-radius: .2rem;
   font-size: 105%;
+  width: 100%;
+}
+
+form label {
+  margin-bottom: .5rem;
+}
+@media (min-width: 720px) {
+  form {
+    flex-direction: row;
+  }
+  form label {
+    margin-bottom: 0;
+  }
+  form button,
+  form input,
+  form select {
+    width: unset;
+  }
 }
