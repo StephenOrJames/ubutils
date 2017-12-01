@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendar Generator (alpha) | UB Utils</title>
+  <title>Calendar Generator | UB Utils</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='calendar_generator.css') }}">
 </head>
 <body>
   <header>
-    <h1>UB Utils: Calendar Generator <sup>alpha</sup></h1>
+    <h1>UB Utils: Calendar Generator</h1>
   </header>
   <main>
     {% raw -%}
@@ -62,7 +62,7 @@
     {%- endraw %}
   </main>
 {#  <footer></footer>#}
-  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="{{ url_for('static', filename='calendar_generator.js') }}"></script>
 </body>
 </html>
