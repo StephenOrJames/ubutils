@@ -9,7 +9,8 @@ header {
   color: #fff;
   padding: 1rem;
 }
-header h1 {
+
+h1 {
   font-size: 1.5rem;
   margin: auto;
   max-width: 960px;
@@ -25,12 +26,8 @@ main {
   padding: 1rem;
 }
 
-form {
-  font-weight: bold;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+li:not(:first-child) {
+  margin-top: .25rem;
 }
 
 button {
@@ -42,35 +39,38 @@ button {
   padding: .3rem;
 }
 
-li:not(:first-child) {
-  margin-top: .25rem;
-}
-
 form {
-  background-color: #e4e4e4;
-  border-radius: .2rem;
+  justify-content: space-evenly;
+  flex-direction: column;
+  display: flex;
   margin-top: .25rem;
+  border-radius: .2rem;
   padding: .5rem;
+  background-color: #e4e4e4;
+  font-weight: bold;
 }
 
 form button,
 form input,
 form select {
   border-radius: .2rem;
-  font-size: 105%;
   width: 100%;
+  font-size: 105%;
 }
 
 form label {
   margin-bottom: .5rem;
 }
+
 @media (min-width: 720px) {
   form {
     flex-direction: row;
   }
+
   form label {
     margin-bottom: 0;
   }
+
   form button,
   form input,
   form select {
