@@ -7,7 +7,7 @@ var app = new Vue({
       cache: {},
     },
     courses: [],
-    semester: "fall"
+    semester: "spring",
   },
   methods: {
     displayResults: function (abbr, num) {
