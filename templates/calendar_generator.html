@@ -10,6 +10,9 @@
   <header>
     <h1>UB Utils: Calendar Generator</h1>
   </header>
+  <noscript>
+    <p>JavaScript is required for this page to function properly.</p>
+  </noscript>
   <main>
     {% raw -%}
       <section id="course-search">
@@ -33,9 +36,10 @@
           <button v-on:click="doSearch">Search</button>
         </form>
 
-        <p v-if="search.results.length === 0">No results.</p>
+        <p v-if ="isLoading">Loading...</p>
         <template v-else>
-          <ul>
+          <p v-if="search.results.length === 0">No results.</p>
+          <ul v-else>
             <li v-for="result in search.results" v-if="!result.isSelected">
               <button v-on:click="select(result)">+</button>
               {{ result.summary }}
@@ -54,7 +58,7 @@
             </li>
           </ul>
 
-          <div style="text-align: right;">
+          <div class="generate-button-container">
             <button v-on:click="generateCalendar">Generate Calendar</button>
           </div>
         </template>

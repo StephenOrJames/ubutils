@@ -1,6 +1,7 @@
 var app = new Vue({
   el: "main",
   data: {
+    isLoading: false, // indicates that we are waiting for an external response
     search: {
       query: "",
       results: "",
@@ -37,17 +38,19 @@ var app = new Vue({
         console.log("Invalid search query");
         return;
       }
-      let abbr = query[1];
-      let num = query[2];
+      const abbr = query[1];
+      const num = query[2];
 
       // Check the cache first
-      if (this.semester in this.search.cache && abbr in this.search.cache[this.semester]
+      if (this.semester in this.search.cache
+          && abbr in this.search.cache[this.semester]
           && num in this.search.cache[this.semester][abbr]) {
         this.displayResults(abbr, num);
         return;
       }
 
       // Fetch if not in cache
+      this.isLoading = true;
       fetch("https://prv-web.sens.buffalo.edu/apis/schedule2/schedule2/courses" +
             "?semester=" + this.semester + "&abbr=" + abbr + "&num=" + num)
           .then((response) => response.json())
@@ -74,6 +77,7 @@ var app = new Vue({
 
             this.displayResults(abbr, num);
           })
+          .then(() => { this.isLoading = false; })
           .catch((error) => {
             this.search.results = [];
             console.log("Error: " + error);

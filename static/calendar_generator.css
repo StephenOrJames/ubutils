@@ -6,6 +6,7 @@ body {
 
 header {
   background-color: #005bbb;
+  box-shadow: 0 0 4px 4px #e4e4e4;
   color: #fff;
   padding: 1rem;
 }
@@ -20,6 +21,14 @@ h2 {
   margin: 0;
 }
 
+noscript p {
+  color: #900;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 960px;
+}
+
 main {
   margin: auto;
   max-width: 960px;
@@ -30,13 +39,37 @@ li:not(:first-child) {
   margin-top: .25rem;
 }
 
+.generate-button-container {
+  text-align: right;
+}
+
 button {
   background-color: #005bbb;
   border: none;
   border-radius: .2rem;
+  box-shadow: 0 0 2px 2px #e4e4e4;
   color: #fff;
   font-weight: bold;
   padding: .3rem;
+}
+button:focus,
+button:hover {
+  background-color: #fff;
+  box-shadow: 0 0 2px 2px #005bbb;
+  color: #005bbb;
+}
+
+input:focus,
+input:hover,
+select:focus,
+select:hover {
+  box-shadow: 0 0 2px 2px #005bbb;
+}
+
+button,
+input,
+select {
+  transition: all 500ms;
 }
 
 form {
@@ -53,6 +86,7 @@ form {
 form button,
 form input,
 form select {
+  border: 1px solid #005bbb;
   border-radius: .2rem;
   width: 100%;
   font-size: 105%;
@@ -62,13 +96,19 @@ form label {
   margin-bottom: .5rem;
 }
 
+main {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 @media (min-width: 720px) {
   form {
     flex-direction: row;
   }
 
   form label {
-    margin-bottom: 0;
+    margin-bottom: auto;
+    margin-top: auto;
   }
 
   form button,
