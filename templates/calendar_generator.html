@@ -20,11 +20,12 @@
         <form onsubmit="return false;">
           <label>
             Semester:
-            <select v-for v-model="semesters.selected">
-              <option value="fall">Fall</option>
-              <option value="winter">Winter</option>
-              <option value="spring">Spring</option>
-              <option value="summer">Summer</option>
+            <select v-model="semesters.selected">
+              <option
+                  v-for="(value, key) in semesters.all"
+                  v-bind:value="key">
+                {{ value }}
+              </option>
             </select>
           </label>
 

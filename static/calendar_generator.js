@@ -11,10 +11,10 @@ var app = new Vue({
     courses: [],
     semesters: {
       all: {
-        'fall': 'Fall',
-        'winter': 'Winter',
-        'spring': 'Spring',
-        'summer': 'Summer',
+        fall: 'Fall',
+        winter: 'Winter',
+        spring: 'Spring',
+        summer: 'Summer',
       },
       selected: 'spring',
     },
