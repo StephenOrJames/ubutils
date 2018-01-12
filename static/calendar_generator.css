@@ -40,7 +40,7 @@ button {
 }
 
 form {
-  justify-content: space-evenly;
+  justify-content: space-around;
   flex-direction: column;
   display: flex;
   margin-top: .25rem;
