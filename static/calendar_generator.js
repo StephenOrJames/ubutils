@@ -1,5 +1,6 @@
 var app = new Vue({
   el: "main",
+
   data: {
     isLoading: false, // indicates that we are waiting for an external response
     search: {
@@ -10,18 +11,21 @@ var app = new Vue({
     courses: [],
     semester: "spring",
   },
+
   methods: {
-    displayResults: function (abbr, num) {
+    displayResults(abbr, num) {
       this.search.results = this.search.cache[this.semester][abbr][num];
     },
-    generateSummary: function (course) {
+
+    generateSummary(course) {
       return course.catalog.description +
           " (" + course.catalog.abbr + " " + course.catalog.num + "): " +
           this.generateSummaryWhen(course.when) +
           " with " + course.instructor +
           " in " + course.room + ".";
     },
-    generateSummaryWhen: function (when) {
+
+    generateSummaryWhen(when) {
       let whens = [];
       for (let i = 0; i < when.length; ++i) {
         whens.push(
@@ -31,7 +35,8 @@ var app = new Vue({
       }
       return whens.join(" and ");
     },
-    doSearch: function () {
+
+    doSearch() {
       // Parse for departmental abbreviation and course number
       const query = this.search.query.toUpperCase().match(/([A-Z]+)\s*(\d+)/);
       if (query === null) {
@@ -52,7 +57,7 @@ var app = new Vue({
       // Fetch if not in cache
       this.isLoading = true;
       fetch("https://prv-web.sens.buffalo.edu/apis/schedule2/schedule2/courses" +
-            "?semester=" + this.semester + "&abbr=" + abbr + "&num=" + num)
+            `?semester=${this.semester}&abbr=${abbr}&num=${num}`)
           .then((response) => response.json())
           .then((response) => {
             let results;
@@ -83,16 +88,19 @@ var app = new Vue({
             console.log("Error: " + error);
           });
     },
-    select: function (course) {
+
+    select(course) {
       course.isSelected = true;
       this.courses.push(course);
     },
-    unselect: function (course) {
+
+    unselect(course) {
       course.isSelected = false;
       let index = this.courses.indexOf(course);
       this.courses.splice(index, 1);
     },
-    generateCalendar: function () {
+
+    generateCalendar() {
       let input = document.createElement("input");
       input.name = "courses";
       input.value = JSON.stringify(this.courses);
@@ -102,6 +110,6 @@ var app = new Vue({
       form.appendChild(input);
       document.body.appendChild(form);
       form.submit();
-    }
+    },
   }
 });
