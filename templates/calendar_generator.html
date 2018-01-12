@@ -33,7 +33,7 @@
             <input type="search" v-model="search.query" required>
           </label>
 
-          <button v-on:click="doSearch">Search</button>
+          <button v-on:click="doSearch(true)">Search</button>
         </form>
 
         <p v-if ="isLoading">Loading...</p>

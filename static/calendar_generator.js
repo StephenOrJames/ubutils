@@ -42,7 +42,7 @@ var app = new Vue({
       return whens.join(" and ");
     },
 
-    doSearch() {
+    doSearch(updateBrowserHistory) {
       // Parse for departmental abbreviation and course number
       const query = this.search.query.toUpperCase().match(/([A-Z]+)\s*(\d+)/);
       if (query === null) {
@@ -58,6 +58,7 @@ var app = new Vue({
           && abbr in this.search.cache[semester]
           && num in this.search.cache[semester][abbr]) {
         this.displayResults(abbr, num);
+        if (updateBrowserHistory) this.updateUrl(abbr, num);
         return;
       }
 
@@ -89,7 +90,11 @@ var app = new Vue({
 
             this.displayResults(abbr, num);
           })
-          .then(() => { this.isLoading = false; })
+          .then(() => {
+            this.isLoading = false;
+
+            if (updateBrowserHistory) this.updateUrl(abbr, num);
+          })
           .catch((error) => {
             this.search.results = [];
             console.log('Error: ' + error);
@@ -118,28 +123,40 @@ var app = new Vue({
       document.body.appendChild(form);
       form.submit();
     },
+
+    updateUrl(abbr, num) {
+      const semester = this.semesters.selected;
+      const url = document.location.pathname +
+          `?semester=${semester}&course=${abbr}+${num}`;
+      history.pushState({}, null, url);
+    },
+
+    restoreFromUrl() {
+      if (window.URL === undefined) return;
+
+      const url = new URL(document.location.href);
+      const params = url.searchParams;
+      const course = params.get('course');
+      let semester = params.get('semester');
+
+      if (semester !== null) {
+        semester = semester.toLowerCase();
+        if (semester in this.semesters.all) {
+          this.semesters.selected = semester;
+        } else {
+          console.log('Invalid semester in URL');
+        }
+      }
+
+      if (!!course) {
+        this.search.query = course;
+        this.doSearch();
+      }
+    },
   },
 
   mounted() {
-    if (window.URL === undefined) return;
-
-    const url = new URL(document.location.href);
-    const params = url.searchParams;
-    const course = params.get('course');
-    let semester = params.get('semester');
-
-    if (semester !== null) {
-      semester = semester.toLowerCase();
-      if (semester in this.semesters.all) {
-        this.semesters.selected = semester;
-      } else {
-        console.log('Invalid semester in URL');
-      }
-    }
-
-    if (!!course) {
-      this.search.query = course;
-      this.doSearch();
-    }
+    window.onpopstate = this.restoreFromUrl;
+    this.restoreFromUrl();
   },
 });
