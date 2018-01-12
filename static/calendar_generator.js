@@ -56,6 +56,7 @@ var app = new Vue({
               results = response.courses;
               for (let i = 0; i < results.length; ++i) {
                 results[i].isSelected = false;
+                results[i].instructor = results[i].instructor.replace(',', ', ');
               }
             } else {
               results = [];
