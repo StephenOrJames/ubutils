@@ -42,7 +42,6 @@ li:not(:first-child) {
 }
 
 .generate-button {
-  font-size: 105%;
   margin: 1rem 0 2rem;
   width: 100%;
 }
@@ -53,6 +52,7 @@ button {
   border-radius: .2rem;
   box-shadow: 0 0 2px 2px #e4e4e4;
   color: #fff;
+  font-size: 105%;
   font-weight: bold;
   padding: .3rem;
 }
@@ -73,7 +73,7 @@ select:hover {
 button,
 input,
 select {
-  transition: all 500ms;
+  transition: all 250ms;
 }
 
 form {
