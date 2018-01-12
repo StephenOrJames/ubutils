@@ -119,6 +119,9 @@ var app = new Vue({
 
       const url = new URL(document.location.href);
       const params = url.searchParams;
+
+      if (params === undefined) return;
+
       const course = params.get('course');
       let semester = params.get('semester');
 
