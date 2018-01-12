@@ -156,7 +156,7 @@ var app = new Vue({
   },
 
   mounted() {
-    window.onpopstate = this.restoreFromUrl;
+    window.onpopstate = () => { this.restoreFromUrl(); };
     this.restoreFromUrl();
   },
 });
