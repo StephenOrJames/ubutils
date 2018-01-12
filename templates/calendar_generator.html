@@ -20,7 +20,7 @@
         <form onsubmit="return false;">
           <label>
             Semester:
-            <select v-model="semester">
+            <select v-for v-model="semesters.selected">
               <option value="fall">Fall</option>
               <option value="winter">Winter</option>
               <option value="spring">Spring</option>
