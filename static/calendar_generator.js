@@ -178,7 +178,6 @@ var app = new Vue({
             dst.push(`${src[i].pattern} (${src[i].dates.start} to ${src[i].dates.end})`);
           }
           return dst;
-          return this.$parent.$options.methods.generateSummaryWhen(this.course.when);
         },
         where() {
           return this.course.room;
