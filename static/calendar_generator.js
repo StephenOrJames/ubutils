@@ -159,4 +159,53 @@ var app = new Vue({
     window.onpopstate = () => { this.restoreFromUrl(); };
     this.restoreFromUrl();
   },
+
+  components: {
+    course: {
+      props: ['action', 'course', 'text'],
+      computed: {
+        interact() {
+          return `${this.action}`;
+        },
+        what() {
+          return `${this.course.catalog.abbr} ${this.course.catalog.num}: ` +
+              this.course.catalog.description;
+        },
+        when() {
+          const src = this.course.when;
+          const dst = [];
+          for (let i = 0; i < src.length; ++i) {
+            dst.push(`${src[i].pattern} (${src[i].dates.start} to ${src[i].dates.end})`);
+          }
+          return dst;
+          return this.$parent.$options.methods.generateSummaryWhen(this.course.when);
+        },
+        where() {
+          return this.course.room;
+        },
+        who() {
+          return this.course.instructor;
+        },
+      },
+      methods: {
+        doAction() {
+          this.action(this.course);
+        },
+      },
+      template: `
+        <div class="course">
+          <header>{{ what }}</header>
+          <button v-on:click="doAction()">{{ text }}</button>
+          <dl>
+            <dt>Time</dt>
+            <dd v-for="w in when">{{ w }}</dd>
+            <dt>Location</dt>
+            <dd>{{ where }}</dd>
+            <dt>Instructor</dt>
+            <dd>{{ who }}</dd>
+          </dl>
+        </div>
+      `,
+    },
+  },
 });

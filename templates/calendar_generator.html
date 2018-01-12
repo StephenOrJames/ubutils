@@ -40,28 +40,33 @@
         <p v-if ="isLoading">Loading...</p>
         <template v-else>
           <p v-if="search.results.length === 0">No results.</p>
-          <ul v-else>
-            <li v-for="result in search.results" v-if="!result.isSelected">
-              <button v-on:click="select(result)">+</button>
-              {{ result.summary }}
-            </li>
-          </ul>
+          <div v-else class="courses">
+            <course
+                v-for="result in search.results"
+                v-if="!result.isSelected"
+                v-bind:course="result"
+                v-bind:action="select"
+                text="+">
+            </course>
+          </div>
         </template>
       </section>
 
       <section id="selected-courses">
         <template v-if="courses.length > 0">
           <h2>Selected Courses</h2>
-          <ul>
-            <li v-for="course in courses">
-              <button v-on:click="unselect(course)">-</button>
-              {{ course.summary }}
-            </li>
-          </ul>
-
-          <div class="generate-button-container">
-            <button v-on:click="generateCalendar">Generate Calendar</button>
+          <div class="courses">
+            <course
+                v-for="course in courses"
+                v-bind:course="course"
+                v-bind:action="unselect"
+                text="-">
+            </course>
           </div>
+
+          <button class="generate-button" v-on:click="generateCalendar()">
+            Generate Calendar
+          </button>
         </template>
       </section>
     {%- endraw %}

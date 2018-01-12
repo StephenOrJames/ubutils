@@ -4,7 +4,7 @@ body {
   margin: 0;
 }
 
-header {
+body > header {
   background-color: #005bbb;
   box-shadow: 0 0 4px 4px #e4e4e4;
   color: #fff;
@@ -30,6 +30,8 @@ noscript p {
 }
 
 main {
+  display: flex;
+  flex-direction: column-reverse;
   margin: auto;
   max-width: 960px;
   padding: 1rem;
@@ -39,8 +41,10 @@ li:not(:first-child) {
   margin-top: .25rem;
 }
 
-.generate-button-container {
-  text-align: right;
+.generate-button {
+  font-size: 105%;
+  margin: 1rem 0 2rem;
+  width: 100%;
 }
 
 button {
@@ -109,11 +113,6 @@ form label {
   margin-bottom: .5rem;
 }
 
-main {
-  display: flex;
-  flex-direction: column-reverse;
-}
-
 @media (min-width: 720px) {
   form {
     flex-direction: row;
@@ -128,5 +127,61 @@ main {
   form input,
   form select {
     width: unset;
+  }
+}
+
+.courses {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: 95%;
+  justify-content: space-between;
+}
+.course {
+  border: 1px solid #e4e4e4;
+  border-radius: 15px;
+  box-sizing: border-box;
+  margin-top: 1rem;
+  margin-bottom: .1rem;
+  width: 100%;
+}
+.course header {
+  background-color: #666;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  color: #fff;
+  padding: .5rem;
+  text-align: center;
+}
+.course button {
+  float: right;
+  margin: 5px;
+}
+.course dl {
+  display: grid;
+  grid-gap: 2px;
+  margin: 0;
+  padding: .5rem;
+}
+.course dt {
+  grid-column: 1;
+}
+.course dt::after {
+  content: ": ";
+}
+.course dd {
+  grid-column: 2;
+  margin: 0;
+}
+
+@media (min-width: 690px) {
+  .course {
+    max-width: 48%;
+  }
+}
+
+@media (min-width: 900px) {
+  .course {
+    max-width: 32%;
   }
 }
