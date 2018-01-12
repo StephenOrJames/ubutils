@@ -25,23 +25,6 @@ var app = new Vue({
       this.search.results = this.search.cache[this.semesters.selected][abbr][num];
     },
 
-    generateSummary(course) {
-      return course.catalog.description +
-          ` (${course.catalog.abbr} ${course.catalog.num}): ` +
-          this.generateSummaryWhen(course.when) +
-          ` with ${course.instructor} in ${course.room}.`;
-    },
-
-    generateSummaryWhen(when) {
-      let whens = [];
-      for (let i = 0; i < when.length; ++i) {
-        whens.push(
-            `${when[i].pattern} (${when[i].dates.start} to ${when[i].dates.end})`
-        );
-      }
-      return whens.join(" and ");
-    },
-
     doSearch(updateBrowserHistory) {
       // Parse for departmental abbreviation and course number
       const query = this.search.query.toUpperCase().match(/([A-Z]+)\s*(\d+)/);
@@ -72,7 +55,6 @@ var app = new Vue({
             if ('courses' in response) {
               results = response.courses;
               for (let i = 0; i < results.length; ++i) {
-                results[i].summary = this.generateSummary(results[i]);
                 results[i].isSelected = false;
               }
             } else {
