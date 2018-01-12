@@ -144,7 +144,7 @@ var app = new Vue({
 
   components: {
     course: {
-      props: ['action', 'course', 'text'],
+      props: ['action', 'course', 'help', 'text'],
       computed: {
         interact() {
           return `${this.action}`;
@@ -176,7 +176,9 @@ var app = new Vue({
       template: `
         <div class="course">
           <header>{{ what }}</header>
-          <button v-on:click="doAction()">{{ text }}</button>
+          <button v-on:click="doAction()" v-bind:title="help">
+            {{ text }}
+          </button>
           <dl>
             <dt>Time</dt>
             <dd v-for="w in when">{{ w }}</dd>

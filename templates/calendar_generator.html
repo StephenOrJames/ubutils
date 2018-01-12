@@ -46,6 +46,7 @@
                 v-if="!result.isSelected"
                 v-bind:course="result"
                 v-bind:action="select"
+                help="Add to calendar"
                 text="+">
             </course>
           </div>
@@ -60,6 +61,7 @@
                 v-for="course in courses"
                 v-bind:course="course"
                 v-bind:action="unselect"
+                help="Remove from calendar"
                 text="-">
             </course>
           </div>
