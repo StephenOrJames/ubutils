@@ -83,10 +83,22 @@ form {
   font-weight: bold;
 }
 
-form button,
+form button {
+  border: 1px solid #fff;
+}
+form button:focus,
+form button:hover {
+  border-color: #005bbb;
+}
+
 form input,
 form select {
   border: 1px solid #005bbb;
+}
+
+form button,
+form input,
+form select {
   border-radius: .2rem;
   width: 100%;
   font-size: 105%;
