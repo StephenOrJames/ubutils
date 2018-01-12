@@ -94,6 +94,7 @@ form button:hover {
 form input,
 form select {
   border: 1px solid #005bbb;
+  padding: .2rem;
 }
 
 form button,
