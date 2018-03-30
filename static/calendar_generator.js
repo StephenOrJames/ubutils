@@ -176,7 +176,9 @@ var app = new Vue({
           for (let i = 0; i < src.length; ++i) {
             const days = this.daysObjectToString(src[i].days);
             const time = src[i].dates;
-            dst.push(`${days} (${time.start} to ${time.end})`);
+            const startTime = this.time24To12(time.start);
+            const endTime = this.time24To12(time.end);
+            dst.push(`${days} (${startTime} to ${endTime})`);
           }
           return dst;
         },
@@ -197,6 +199,13 @@ var app = new Vue({
             }
           }
           return daysStr;
+        },
+        time24To12(time24) {
+          const [_hours24, minutes] = time24.split(':', 2);
+          const hours24 = parseInt(_hours24);
+          const hours12 = (hours24 + 11) % 12 + 1;
+          const meridiem = hours24 < 12 ? 'AM' : 'PM';
+          return `${hours12}:${minutes} ${meridiem}`;
         },
         doAction() {
           this.action(this.course);
