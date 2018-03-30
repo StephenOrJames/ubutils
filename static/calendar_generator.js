@@ -149,6 +149,19 @@ var app = new Vue({
   components: {
     course: {
       props: ['action', 'course', 'help', 'text'],
+      data() {
+        return {
+          days: [
+            ['monday',    'M'],
+            ['tuesday',   'T'],
+            ['wednesday', 'W'],
+            ['thursday',  'R'],
+            ['friday',    'F'],
+            ['saturday',  'S'],
+            // no classes on Sundays
+          ],
+        };
+      },
       computed: {
         interact() {
           return `${this.action}`;
@@ -161,7 +174,9 @@ var app = new Vue({
           const src = this.course.when;
           const dst = [];
           for (let i = 0; i < src.length; ++i) {
-            dst.push(`${src[i].pattern} (${src[i].dates.start} to ${src[i].dates.end})`);
+            const days = this.daysObjectToString(src[i].days);
+            const time = src[i].dates;
+            dst.push(`${days} (${time.start} to ${time.end})`);
           }
           return dst;
         },
@@ -173,6 +188,16 @@ var app = new Vue({
         },
       },
       methods: {
+        daysObjectToString(daysObj) {
+          let daysStr = '';
+          for (const d in this.days) {
+            const [day, letter] = this.days[d];
+            if (daysObj[day] === 'Y') {
+              daysStr += letter;
+            }
+          }
+          return daysStr;
+        },
         doAction() {
           this.action(this.course);
         },
