@@ -28,7 +28,7 @@ class Course {
       const time = w.dates;
       const startTime = this.time24To12(time.start);
       const endTime = this.time24To12(time.end);
-      this.times.push(`${days} (${startTime} - ${endTime})`);
+      this.times.push(`${days} (${startTime}-${endTime})`);
     }
   }
 
@@ -53,7 +53,7 @@ class Course {
     const hours24 = parseInt(_hours24);
     const hours12 = (hours24 + 11) % 12 + 1;
     const meridiem = hours24 < 12 ? 'AM' : 'PM';
-    return `${hours12}:${minutes} ${meridiem}`;
+    return `${hours12}:${minutes}${meridiem}`;
   }
 }
 
@@ -223,9 +223,9 @@ const app = new Vue({
           <dl>
             <dt>Time</dt>
             <dd v-for="time in course.times">{{ time }}</dd>
-            <dt>Location</dt>
+            <dt>Room</dt>
             <dd>{{ course.location }}</dd>
-            <dt>Instructor</dt>
+            <dt>Instr.</dt>
             <dd>{{ course.instructor }}</dd>
           </dl>
         </div>
