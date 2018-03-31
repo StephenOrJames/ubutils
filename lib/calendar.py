@@ -24,9 +24,10 @@ def _generate_calendar_event(course):
         course["catalog"]["abbr"],
         course["catalog"]["num"],
         course["catalog"]["type"])
-    description = "Title: {}\nInstructor: {}".format(
-        course["catalog"]["title"],
-        course["instructor"])
+    description = "Title: {title}\nSection: {section}\nInstructor: {instructor}".format(
+        title=course["catalog"]["title"],
+        section=course["section"],
+        instructor=course["instructor"])
     location = course["room"]
 
     for when in course["when"]:
