@@ -1,4 +1,64 @@
-var app = new Vue({
+const daysLetters = [
+  ['monday',    'M'],
+  ['tuesday',   'T'],
+  ['wednesday', 'W'],
+  ['thursday',  'R'],
+  ['friday',    'F'],
+  ['saturday',  'S'],
+  // no classes on Sundays
+];
+
+
+class Course {
+  constructor(data) {
+    this._data = data;
+
+    const catalog = data.catalog;
+
+    this.abbr = catalog.abbr;
+    this.num = catalog.num;
+    this.title = catalog.description;
+    this.section = data.section;
+    this.location = data.room;
+    this.instructor = data.instructor;
+
+    this.times = [];
+    for (const w of data.when) {
+      const days = this.parseDays(w.days);
+      const time = w.dates;
+      const startTime = this.time24To12(time.start);
+      const endTime = this.time24To12(time.end);
+      this.times.push(`${days} (${startTime} - ${endTime})`);
+    }
+  }
+
+  get heading() {
+    return `${this.abbr} ${this.num} ${this.section}: ${this.title}`;
+  }
+
+  // Convert an object with the days to a string
+  parseDays(daysObj) {
+    let daysStr = '';
+    for (const dayLetter of daysLetters) {
+      const [day, letter] = dayLetter;
+      if (daysObj[day] === 'Y') {
+        daysStr += letter;
+      }
+    }
+    return daysStr;
+  }
+
+  time24To12(time24) {
+    const [_hours24, minutes] = time24.split(':', 2);
+    const hours24 = parseInt(_hours24);
+    const hours12 = (hours24 + 11) % 12 + 1;
+    const meridiem = hours24 < 12 ? 'AM' : 'PM';
+    return `${hours12}:${minutes} ${meridiem}`;
+  }
+}
+
+
+const app = new Vue({
   el: 'main',
 
   data: {
@@ -69,7 +129,7 @@ var app = new Vue({
             if (!(abbr in this.search.cache[semester])) {
               this.search.cache[semester][abbr] = {};
             }
-            this.search.cache[semester][abbr][num] = results;
+            this.search.cache[semester][abbr][num] = results.map(r => new Course(r));
 
             this.displayResults(abbr, num);
           })
@@ -98,7 +158,7 @@ var app = new Vue({
     generateCalendar() {
       const input = document.createElement('input');
       input.name = 'courses';
-      input.value = JSON.stringify(this.courses);
+      input.value = JSON.stringify(this.courses.map(c => c._data));
       const form = document.createElement('form');
       form.method = 'POST';
       form.style.display = 'none';
@@ -149,81 +209,24 @@ var app = new Vue({
   components: {
     course: {
       props: ['action', 'course', 'help', 'text'],
-      data() {
-        return {
-          days: [
-            ['monday',    'M'],
-            ['tuesday',   'T'],
-            ['wednesday', 'W'],
-            ['thursday',  'R'],
-            ['friday',    'F'],
-            ['saturday',  'S'],
-            // no classes on Sundays
-          ],
-        };
-      },
-      computed: {
-        interact() {
-          return `${this.action}`;
-        },
-        what() {
-          return `${this.course.catalog.abbr} ${this.course.catalog.num}: ` +
-              this.course.catalog.description;
-        },
-        when() {
-          const src = this.course.when;
-          const dst = [];
-          for (let i = 0; i < src.length; ++i) {
-            const days = this.daysObjectToString(src[i].days);
-            const time = src[i].dates;
-            const startTime = this.time24To12(time.start);
-            const endTime = this.time24To12(time.end);
-            dst.push(`${days} (${startTime} to ${endTime})`);
-          }
-          return dst;
-        },
-        where() {
-          return this.course.room;
-        },
-        who() {
-          return this.course.instructor;
-        },
-      },
       methods: {
-        daysObjectToString(daysObj) {
-          let daysStr = '';
-          for (const d in this.days) {
-            const [day, letter] = this.days[d];
-            if (daysObj[day] === 'Y') {
-              daysStr += letter;
-            }
-          }
-          return daysStr;
-        },
-        time24To12(time24) {
-          const [_hours24, minutes] = time24.split(':', 2);
-          const hours24 = parseInt(_hours24);
-          const hours12 = (hours24 + 11) % 12 + 1;
-          const meridiem = hours24 < 12 ? 'AM' : 'PM';
-          return `${hours12}:${minutes} ${meridiem}`;
-        },
         doAction() {
           this.action(this.course);
         },
       },
       template: `
         <div class="course">
-          <header>{{ what }}</header>
+          <header>{{ course.heading }}</header>
           <button v-on:click="doAction()" v-bind:title="help">
             {{ text }}
           </button>
           <dl>
             <dt>Time</dt>
-            <dd v-for="w in when">{{ w }}</dd>
+            <dd v-for="time in course.times">{{ time }}</dd>
             <dt>Location</dt>
-            <dd>{{ where }}</dd>
+            <dd>{{ course.location }}</dd>
             <dt>Instructor</dt>
-            <dd>{{ who }}</dd>
+            <dd>{{ course.instructor }}</dd>
           </dl>
         </div>
       `,
