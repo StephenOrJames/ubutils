@@ -139,7 +139,7 @@ form label {
 }
 .course {
   border: 1px solid #e4e4e4;
-  border-radius: 15px;
+  border-radius: 10px;
   box-sizing: border-box;
   margin-top: 1rem;
   margin-bottom: .1rem;
@@ -147,8 +147,8 @@ form label {
 }
 .course header {
   background-color: #666;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   color: #fff;
   padding: .5rem;
   text-align: center;
