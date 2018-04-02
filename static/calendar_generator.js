@@ -28,7 +28,11 @@ class Course {
       const time = w.dates;
       const startTime = this.time24To12(time.start);
       const endTime = this.time24To12(time.end);
-      this.times.push(`${days} (${startTime}-${endTime})`);
+      if (days === '' && startTime === null && endTime === null) {
+        this.times.push('Unknown');
+      } else {
+        this.times.push(`${days} (${startTime}-${endTime})`);
+      }
     }
   }
 
@@ -49,6 +53,7 @@ class Course {
   }
 
   time24To12(time24) {
+    if (time24 === '') return null;
     const [_hours24, minutes] = time24.split(':', 2);
     const hours24 = parseInt(_hours24);
     const hours12 = (hours24 + 11) % 12 + 1;
