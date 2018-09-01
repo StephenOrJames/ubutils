@@ -50,17 +50,16 @@ button {
   background-color: #005bbb;
   border: none;
   border-radius: .2rem;
-  box-shadow: 0 0 2px 2px #e4e4e4;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
   color: #fff;
+  cursor: pointer;
   font-size: 105%;
   font-weight: bold;
   padding: .3rem;
 }
 button:focus,
 button:hover {
-  background-color: #fff;
-  box-shadow: 0 0 2px 2px #005bbb;
-  color: #005bbb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .5);
 }
 
 input:focus,
@@ -86,14 +85,6 @@ form {
   justify-content: space-around;
   margin-top: .25rem;
   padding: .5rem;
-}
-
-form button {
-  border: 1px solid #fff;
-}
-form button:focus,
-form button:hover {
-  border-color: #005bbb;
 }
 
 form input,
