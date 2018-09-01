@@ -146,10 +146,10 @@ form label {
   width: 100%;
 }
 .course header {
-  background-color: #666;
+  background-color: #e4e4e4;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  color: #fff;
+  margin: -1px;
   padding: .5rem;
   text-align: center;
 }
