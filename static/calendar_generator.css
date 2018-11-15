@@ -84,6 +84,7 @@ form {
   flex-direction: column;
   font-weight: bold;
   justify-content: space-around;
+  margin-bottom: 1rem;
   margin-top: .25rem;
   padding: .5rem;
 }
@@ -124,19 +125,14 @@ form label {
 }
 
 .courses {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
   font-size: 95%;
-  justify-content: space-between;
+  grid-gap: .5rem;
 }
 .course {
   border: 1px solid #e4e4e4;
   border-radius: 10px;
   box-sizing: border-box;
-  margin-top: 1rem;
-  margin-bottom: .1rem;
-  width: 100%;
 }
 .course header {
   background-color: #e4e4e4;
@@ -168,13 +164,13 @@ form label {
 }
 
 @media (min-width: 690px) {
-  .course {
-    max-width: 48%;
+  .courses {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 900px) {
-  .course {
-    max-width: 32%;
+  .courses {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
