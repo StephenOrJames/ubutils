@@ -81,7 +81,7 @@ const app = new Vue({
         spring: 'Spring',
         summer: 'Summer',
       },
-      selected: 'fall',
+      selected: 'spring',
     },
   },
 
